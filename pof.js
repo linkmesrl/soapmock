@@ -1,4 +1,25 @@
-import * as soapMock from './index'
+'use strict';
+const soap = require('soap');
+
+//import * as soapMock from './index'
+const soapMock = require('./index')
+const baseUrl = './currenct.xml'
+const START_TECNIC_CHARGE = 10
+
+var admin = {
+  email: 'prova@linkme.com',
+  firstName: 'Admin',
+  lastName: 'We'
+}
+
+var tenant = {
+  domains: [
+    'it'
+  ],
+  currencyName: 'euro',
+  newUserCoins: 0
+}
+
 const services = {
   CurrencyService: {
     CurrencyServicePort: {
@@ -25,7 +46,7 @@ const services = {
   }
 }
 
-const soapServerMock = setupMockServer(services, {  wsdlpath: baseUrl, port: 133131 }, (err, server) => {
+const soapServerMock = soapMock.setupMockServer(services, {  wsdlpath: baseUrl, port: 8004 }, (err, server) => {
 
   soap.createClient(baseUrl, (err, client) => {
 
@@ -56,6 +77,6 @@ const soapServerMock = setupMockServer(services, {  wsdlpath: baseUrl, port: 133
       .createOrUpdateCurrency(xml, (err, res) => {
         console.log(err, res);
         process.exit(0)
-      }));
+      });
   });
 })
